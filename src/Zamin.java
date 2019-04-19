@@ -48,22 +48,21 @@ public class Zamin  {
             }
         }
     }
-    public void Print ( ){
-        for( int i = 0 ; i < m ; i++ ){
-            for (int j = 0 ; j < n ; j++){
-                if (zamin [i][j] != 'D' && zamin[i][j] != 'P') {
-                    if( zamin[i][j] == '*' || zamin[i][j] == 'o')
-                        System.out.print( zamin[i][j] + " ");
-                    else
-                        out.print('-' + " ");
-                }
+    public void Print ( ) {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (zamin[i][j] == 'D' || zamin[i][j] == 'P' || zamin[i][j] == '*' || zamin[i][j] == 'o')
+                    System.out.print(zamin[i][j] + " ");
                 else
-                    out.print( zamin[i][j] + " " );
-                }
-            System.out.println();
+                    out.print('-' + " ");
+            }
+                System.out.println();
             }
         }
+
+
         public void SetPos (int x , int y , char c){ this.zamin [x][y] = c;}
+
     public void clrscr(){
         try {
 

@@ -7,7 +7,13 @@ public class Police {
     private int num ;
     private Police [] polices = new Police[num];
     Dozd d ;
-    public Police( int m , int n , int num , Dozd d ){
+    private Zamin zamin;
+
+    public void setZamin(Zamin zamin) {
+        this.zamin = zamin;
+    }
+
+    public Police(int m , int n , int num , Dozd d ){
         this.m = m;
         this.n = n;
         this.num = num;
@@ -30,39 +36,95 @@ public class Police {
 
         if( status == 0)
         {
-            Random random = new Random();
+            boolean check = false;
             lastx = x;
             lasty = y;
-            x = random.nextInt(3 ) + x - 1;;
-            if( x == -1)
-                x++;
-            if(x == m)
-                x--;
-            y = random.nextInt(3 ) + y - 1;
-            if( y == -1)
-                y++;
-            if(y == n)
-                y--;
+            while ( !check ) {
+                Random random = new Random();
+                x = random.nextInt(3 ) + lastx - 1;;
+                if( x == -1)
+                    x++;
+                if(x == m)
+                    x--;
+                y = random.nextInt(3 ) + lasty - 1;
+                if( y == -1)
+                    y++;
+                if(y == n)
+                    y--;
+                if(zamin.getZamin()[x][y] != 'P'){
+                    check = true ;
+                    break;
+                }
+            }
         }
-        else
+        else //agar polica dozd ro bebinan
         {
-
             lastx =x;
             lasty = y;
             int xdoz = d.getLastx();
             int ydoz = d.getLasty();
-            if( x < xdoz && x < m)
-                x ++;
-            else if( x == xdoz)
-                x=x;
-            else if( x != 0)
-                x--;
-            if(y < ydoz && y < n)
-                y++;
-            else if( y == ydoz)
-                y=y;
-            else if( y != 0)
-                y--;
+            boolean check = false;
+            while (!check){
+                if( x < xdoz && y<ydoz && zamin.getZamin()[x+1][y+1] != 'P' ){
+                    x ++;
+                    y++;
+                    check = true;
+                    break;
+                }
+
+                else if( x == xdoz && y < ydoz && zamin.getZamin()[x][y+1] != 'P'){
+                    x=x;
+                    y++;
+                    check = true;
+                    break;
+                }
+                else if( x > xdoz && y < ydoz && zamin.getZamin()[x-1][y+1] != 'P'){
+                    x--;
+                    y++;
+                    check = true;
+                    break;
+                }
+
+                else if(y == ydoz && x < xdoz && zamin.getZamin()[x+1][y] != 'P'){
+                    x++;
+                    y=y;
+                    check = true;
+                    break;
+                }
+
+                else if( y == ydoz && x == xdoz){
+                    check = true;
+                    break;
+                }
+                else if( y == ydoz && x > xdoz && zamin.getZamin()[x-1][y] != 'P'){
+                    x--;
+                    check = true;
+                    break;
+                }
+                else if( y > ydoz && x < xdoz && zamin.getZamin()[x+1][y-1] != 'P'){
+                    y--;
+                    x++;
+                    check = true;
+                    break;
+                }
+                else if( y > ydoz && x == xdoz && zamin.getZamin()[x][y-1] != 'P'){
+                    y--;
+                    check = true;
+                    break;
+                }
+                else if( y > ydoz && x > xdoz && zamin.getZamin()[x-1][y-1] != 'P'){
+                    y--;
+                    x--;
+                    check = true;
+                    break;
+                }
+                else {
+                    check = true;
+                    break;
+                }
+
+            }
+
         }
     }
 

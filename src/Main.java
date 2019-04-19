@@ -6,8 +6,8 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         System.out.println(" this is a game where in a matrix of dimensions m*n there are a number of cops trying to catch a thief " +
                 "and every 2.5 seconds that goes by cops and the thief move or stay in their place\n according to the rules. the game ends if: \n" +
-                "1: the thief goes to the last position of one of the polices \n" +
-                "2: one of the cops goes to the current position of the thief\n to start the game enter the dimensions and the number of cops in this order : 1-m 2-n 3-number of cops \n" +
+                "1: the thief goes to the last position of one of the polices , which is shown by 'o' in map \n" +
+                "2: one of the cops goes to the current position of the thief , which is shown by '*' in map \n to start the game enter the dimensions and the number of cops in this order : 1-m 2-n 3-number of cops \n" +
                 "have fun !!! ");
         int m = scan.nextInt();
         int n = scan.nextInt();
@@ -16,12 +16,16 @@ public class Main {
         int PolTotalmoves = 0;
         Dozd d = new Dozd(m, n);
         Police[] polices = new Police[num];
+
         for (int i = 0; i < num; i++) {
-            polices[i] = new Police(m, n, num, d);
+            polices[i] = new Police(m, n, num, d );
             polices[i].setPolices(polices);
         }
         Zamin zamin = new Zamin(m, n, num, polices,d);
         zamin.Print();
+        for (int i = 0; i < num; i++) {
+            polices[i].setZamin(zamin);
+        }
         boolean t = false;
         boolean same = false;
         boolean lastpos = false ;
@@ -42,6 +46,7 @@ public class Main {
             }
             for (int i = 0; i < num; i++) {
                 polices[i].move();
+                polices[i].setPolices(polices);
                 zamin.SetPos(polices[i].getX() , polices[i].getY() , 'P');
                 if (polices[i].getLastx() != polices[i].getX() || polices[i].getLasty() != polices[i].getY())
                     zamin.SetPos(polices[i].getLastx() , polices[i].getLasty() , '-');
